@@ -6,3 +6,7 @@
 # NuGet v3's project.json files produces more ignoreable files
 *.nuget.g.props
 *.nuget.g.targets
+
+*.pdb
+*.csproj.FileListAbsolute.txt
+*.AssemblyInfo.cs
