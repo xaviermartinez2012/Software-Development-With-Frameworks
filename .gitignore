@@ -1,0 +1,8 @@
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!*.[Cc]ache/
+
+# NuGet v3's project.json files produces more ignoreable files
+*.nuget.g.props
+*.nuget.g.targets
