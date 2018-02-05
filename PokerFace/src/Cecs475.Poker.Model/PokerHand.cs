@@ -50,7 +50,7 @@ namespace Cecs475.Poker.Model {
             int compareHandType = this.PokerHandType.CompareTo(other.PokerHandType);
             if (compareHandType == 0)
             {
-                for (int i = 0; i < other.Hand.Count; i++)
+                for (int i = (other.Hand.Count - 1); i > 0; i--)
                 {
                     compareHandType = this.Hand[i].CompareTo(other.Hand[i]);
                     if (compareHandType != 0) {
