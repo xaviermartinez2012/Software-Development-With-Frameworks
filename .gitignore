@@ -10,3 +10,4 @@
 *.pdb
 *.csproj.FileListAbsolute.txt
 *.AssemblyInfo.cs
+*.dll
