@@ -4,7 +4,7 @@ using System.Collections.Generic;
 // A namespace is a logical grouping of types under one name. A namespace is added to a type's name to create its
 // Fully Qualified Name. Namespaces are similar to Java packages, except Java packages define a physical on-disk
 // grouping in addition to a logical grouping.
-namespace Cecs475.Poker.Model {
+namespace Cecs475.Poker.Cards {
 	// A class defines a new reference type. Like Java, all classes inherit from a base Object type. In .NET, a
 	// reference type uses reference semantics for assignment and copying. All classes in Java are reference types,
 	// but .NET (and thus C#) give us the option of declaring non-reference types, which we will see later.
