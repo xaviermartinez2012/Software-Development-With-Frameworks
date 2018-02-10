@@ -363,5 +363,23 @@ namespace Lab2ChessTests {
 			possible.Should().Contain(Move("e8, d8")).And.Contain(Move("f8, e7")).And.
 				Contain(Move("g8, e7"), "the king cannot move into check");
 		}
+
+
+		/// <summary>
+		/// Pawns can place enemy king in check.
+		/// </summary>
+		[Fact]
+		public void PawnCausingCheck() {
+			ChessBoard b = CreateBoardFromPositions(
+				Pos("a7"), ChessPieceType.Pawn, 1,
+				Pos("b8"), ChessPieceType.King, 2,
+				Pos("a1"), ChessPieceType.King, 1
+			);
+
+			// Move so it's black's turn.
+			Apply(b, "a1, a2");
+			var possMoves = b.GetPossibleMoves();
+			b.IsCheck.Should().BeTrue("black's king is in check from pawn at a7");
+		}
 	}
 }
