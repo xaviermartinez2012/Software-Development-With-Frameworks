@@ -54,7 +54,7 @@ namespace Lab2ChessTests {
 			var currentAdvantage = b.CurrentAdvantage;
 			currentAdvantage.Player.Should().Be(0, "no player should have an advantage at the beginning of the game");
 			currentAdvantage.Advantage.Should().Be(0, "no player should have an advantage at the beginning of the game");
-			char[] columns = new char[] {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+			char[] columns = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 			foreach (var column in columns)
 			{
 				var pawnWhite = b.GetPieceAtPosition(Pos(string.Format("{0}2", column)));
@@ -127,7 +127,7 @@ namespace Lab2ChessTests {
 
 			var possMoves = b.GetPossibleMoves();
 			var enPassantExpected = GetMovesAtPosition(possMoves, Pos("c5"));
-			enPassantExpected.Should().HaveCount(2, "pawn can move forward one or en passant")
+			enPassantExpected.Should().HaveCount(2, "pawn can move forward one space or capture en passant")
 				.And.Contain(Move("c5, c6"))
 				.And.Contain(Move(Pos("c5"), Pos("d6"), ChessMoveType.EnPassant));
 
@@ -192,6 +192,53 @@ namespace Lab2ChessTests {
 		}
 
 		/// <summary>
+		/// Testing undo of queen capture
+		/// </summary>
+		[Fact]
+		public void UndoQueenCapture() {
+			ChessBoard b = CreateBoardFromMoves(
+				"c2, c4",
+				"e7, e5",
+				"c4, c5",
+				"e5, e4",
+				"d1, c2",
+				"d7, d5"
+			);
+
+			var possMoves = b.GetPossibleMoves();
+			var queenCaptureExpected = GetMovesAtPosition(possMoves, Pos("c2"));
+			b.GetPieceAtPosition(Pos("c2")).PieceType.ShouldBeEquivalentTo(ChessPieceType.Queen, "the queen was moved from d1 -> c2");
+
+			queenCaptureExpected.Should().HaveCount(7, "queen can move diagonally in three different ways and vertically in one from c2")
+				.And.Contain(Move("c2, b3"))
+				.And.Contain(Move("c2, a4"))
+				.And.Contain(Move("c2, d3"))
+				.And.Contain(Move("c2, c3"))
+				.And.Contain(Move("c2, c4"))
+				.And.Contain(Move("c2, d1"))
+				.And.Contain(Move(Pos("c2"), Pos("e4"), ChessMoveType.Normal));
+
+			// Apply the queen capture
+			Apply(b, Move(Pos("c2"), Pos("e4"), ChessMoveType.Normal));
+			var queen = b.GetPieceAtPosition(Pos("e4"));
+			queen.Player.Should().Be(1, "queen performed capture");
+			queen.PieceType.Should().Be(ChessPieceType.Queen, "queen performed capture");
+			b.CurrentAdvantage.Should().Be(Advantage(1, 1), "player 1 captured player 2's pawn with a queen");
+
+			// Undo the move and check the board state
+			b.UndoLastMove();
+			b.CurrentAdvantage.Should().Be(Advantage(0, 0), "queen capture was undone");
+			queen = b.GetPieceAtPosition(Pos("c2"));
+			queen.Player.Should().Be(1, "queen capture was undone");
+			queen.PieceType.Should().Be(ChessPieceType.Queen, "queen capture was undone");
+			var captured = b.GetPieceAtPosition(Pos("e4"));
+			captured.Player.Should().Be(2, "queen capture was undone");
+			var boardIntegrity = b.GetPieceAtPosition(Pos("c5"));
+			boardIntegrity.Player.Should().Be(1, "player 1 has a piece at e4");
+			boardIntegrity.PieceType.Should().Be(ChessPieceType.Pawn, "queen capture was undone");
+		}
+
+		/// <summary>
 		/// Testing bishop possible moves
 		/// </summary>
 		[Fact]
@@ -224,6 +271,7 @@ namespace Lab2ChessTests {
 				"h2, h4",
 				"f8, b4"
 			);
+			b.IsCheck.Should().BeTrue("the king is in check");
 			var possMoves = b.GetPossibleMoves();
 			possMoves.Should().HaveCount(6, "the king can move out of check")
 				.And.Contain(Move("e1, e2"))
@@ -232,6 +280,63 @@ namespace Lab2ChessTests {
 				.And.Contain(Move("b1, d2"))
 				.And.Contain(Move("b1, c3"))
 				.And.Contain(Move("c2, c3"));
+			b.UndoLastMove();
+			b.IsCheck.Should().BeFalse("the king is no longer in check as the last move was undone");
+		}
+		
+		/// <summary>
+		/// BUSTER CASE
+		/// </summary>
+		[Fact]
+		public void ConsistencyCheck_024398() {
+			ChessBoard b = new ChessBoard();
+			char[] columns = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+			int count = 1;
+			while (count < 3)
+			{
+				foreach (var column in columns)
+				{
+					int white = 2 + count;
+					int whitePrev = white - 1;
+					int black = 7 - count;
+					int blackPrev = black + 1;
+					Apply(b, string.Format("{0}{1}, {2}{3}", column, whitePrev, column, white));
+					Apply(b, string.Format("{0}{1}, {2}{3}", column, blackPrev, column, black));
+				}
+				count++;
+			}
+			count++;
+			for (int i = 0; i < columns.Count(); i+=2)
+			{
+				char column = columns[i];
+				char columnPlusOne = columns[i+1];
+				Apply(b, Move(Pos(string.Format("{0}{1}", column, count)), Pos(string.Format("{0}{1}", columnPlusOne, count + 1)), ChessMoveType.Normal));
+				b.CurrentAdvantage.Should().Be(Advantage(1, 1), "Player 1 captured pawn");
+				Apply(b, Move(Pos(string.Format("{0}{1}", column, count + 1)), Pos(string.Format("{0}{1}", columnPlusOne, count)), ChessMoveType.Normal));
+				b.CurrentAdvantage.Should().Be(Advantage(0, 0), "Player 2 captured pawn");
+				if (column == 'g')
+				{
+					break;
+				}
+			}
+			for (int i = 2; i < 8; i++)
+			{
+				Apply(b, string.Format("{0}{1}, {2}{3}", 'a', 1, 'a', i));
+				b.GetPieceAtPosition(Pos(string.Format("{0}{1}", 'a', i))).PieceType.ShouldBeEquivalentTo(ChessPieceType.Rook, string.Format("rook was moved to forward from a1 -> a{0}", i));
+				b.UndoLastMove();
+				b.GetPieceAtPosition(Pos(string.Format("{0}{1}", 'a', i))).PieceType.ShouldBeEquivalentTo(ChessPieceType.Empty, string.Format("board moved rook back from a{0} -> a1", i));
+			}
+			for (int i = 1; i < columns.Count(); i+=2)
+			{
+				char column = columns[i];
+				var white = b.GetPieceAtPosition(Pos(string.Format("{0}{1}", column, 5)));
+				white.Player.ShouldBeEquivalentTo(1, string.Format("white has a pawn at {0}5", column));
+				white.PieceType.ShouldBeEquivalentTo(ChessPieceType.Pawn, string.Format("white has a pawn at {0}5", column));
+				var black = b.GetPieceAtPosition(Pos(string.Format("{0}{1}", column, 4)));
+				black.Player.ShouldBeEquivalentTo(2, string.Format("black has a pawn at {0}4", column));
+				black.PieceType.ShouldBeEquivalentTo(ChessPieceType.Pawn, string.Format("black has a pawn at {0}4", column));
+			}
+			b.CurrentAdvantage.Should().Be(Advantage(0, 0), "no player has an advantage");
 		}
 	}
 }
