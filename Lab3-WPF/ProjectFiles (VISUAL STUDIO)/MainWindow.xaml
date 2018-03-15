@@ -1,0 +1,76 @@
+﻿<Window x:Class="Lab3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="318.967" Width="520.955" Background="{x:Null}">
+    <Grid Margin="0">
+        <Grid x:Name="FooterGrid" Margin="120,816,0,0"/>
+        <Grid x:Name="RightGrid" Margin="70,60,0,0.5" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" MaxHeight="30" MinHeight="30"/>
+                <RowDefinition Height="40" MaxHeight="30" MinHeight="30"/>
+                <RowDefinition Height="30" MaxHeight="30" MinHeight="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30" MaxHeight="30" MinHeight="30"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="GridRow1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Name:" Grid.Column="0" FontSize="12" VerticalAlignment="Center"/>
+                <TextBox x:Name="Name" Grid.Column="1" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid x:Name="GridRow2" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Age:" Grid.Column="0" VerticalContentAlignment="Center" FontSize="12"/>
+                <ComboBox x:Name="Age" Grid.Column="1">
+                    <ComboBoxItem Content="18"/>
+                    <ComboBoxItem Content="19"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="21"/>
+                </ComboBox>
+            </Grid>
+            <Grid x:Name="GridRow3" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Favorite Cereal:" Grid.Column="0" VerticalContentAlignment="Bottom" FontSize="12"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <RadioButton x:Name="Cheerios" Content="Cheerios" HorizontalContentAlignment="Right" Padding="5,-3" FontSize="12" BorderThickness="1" ClipToBounds="True"/>
+                    <RadioButton x:Name="WheatChex" Content="Wheat Chex" HorizontalContentAlignment="Right" Padding="5,-3" FontSize="12" BorderThickness="1" ClipToBounds="True"/>
+                    <RadioButton x:Name="Kix" Content="Kix" HorizontalContentAlignment="Right" Padding="5,-3" FontSize="12" BorderThickness="1" ClipToBounds="True"/>
+                    <RadioButton x:Name="LuckyChars" Content="Lucky Charms" HorizontalContentAlignment="Right" Padding="5,-3" FontSize="12" BorderThickness="1" ClipToBounds="True"/>
+                </StackPanel>
+            </Grid>
+            <Label Content="Hello" Margin="0" Grid.Row="4" VerticalContentAlignment="Center" Background="Red" FontSize="12"/>
+        </Grid>
+        <StackPanel x:Name="LeftStackPanel" HorizontalAlignment="Left" Margin="0,60,0,-0.5" Width="70" Background="Yellow">
+            <RadioButton x:Name="Option1" Content="Option 1" HorizontalContentAlignment="Right" Padding="0" FontSize="12" VerticalContentAlignment="Center" BorderThickness="1" ClipToBounds="True"/>
+            <RadioButton x:Name="Option2" Content="Option 2" HorizontalContentAlignment="Right" Padding="0" FontSize="12" VerticalContentAlignment="Center" BorderThickness="1" ClipToBounds="True"/>
+            <RadioButton x:Name="Option3" Content="Option 3" HorizontalContentAlignment="Right" Padding="0" FontSize="12" VerticalContentAlignment="Center" BorderThickness="1" ClipToBounds="True"/>
+            <RadioButton x:Name="Option4" Content="Option 4" HorizontalContentAlignment="Right" Padding="0" FontSize="12" VerticalContentAlignment="Center" BorderThickness="1" ClipToBounds="True"/>
+        </StackPanel>
+        <Grid x:Name="ThisIsCenteredGrid" Height="30" Margin="0,30,0,0" VerticalAlignment="Top" Background="Cyan">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="This is centered!" Grid.Column="1" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGreen" FontSize="12"/>
+        </Grid>
+        <Grid x:Name="AtrociousGrid" Height="30" Margin="0" Background="White" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="This is an atrocious user interface!" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+                <Button x:Name="maximizeButton" Content="Maximize!" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
