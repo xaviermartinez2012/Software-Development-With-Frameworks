@@ -35,8 +35,8 @@ namespace Cecs475.Othello.Application
 		private static SolidColorBrush GetFillBrush(int player)
 		{
 			if (player == 1)
-				return Brushes.Black;
-			return Brushes.White;
+				return Brushes.Yellow;
+			return Brushes.Blue;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

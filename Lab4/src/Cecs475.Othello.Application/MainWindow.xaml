@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:Cecs475.Othello.Application"
         mc:Ignorable="d"
         Title="Othello!" Width="500">
+    <Window.Resources>
+        <local:OthelloAdvantageConverter x:Key="Advantage"/>
+    </Window.Resources>
     <DockPanel>
         <StatusBar Height="30" DockPanel.Dock="Bottom" FontSize="10" DataContext="{Binding ElementName=OthelloView}">
             <WrapPanel>
                 <Label>Score:</Label>
-                <Label Content="{Binding Model.CurrentAdvantage.Advantage}"/>
+                <ContentControl Content="{Binding Model.CurrentAdvantage, Converter={StaticResource Advantage}}"/>
             </WrapPanel>
         </StatusBar>
         <local:OthelloView x:Name="OthelloView"/>
