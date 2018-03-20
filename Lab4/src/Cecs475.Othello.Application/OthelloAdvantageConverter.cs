@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using System.Windows.Controls;
 using Cecs475.Othello.Model;
 
 namespace Cecs475.Othello.Application
@@ -27,11 +26,7 @@ namespace Cecs475.Othello.Application
             {
                 label = player == 2 ? string.Format(formatString, "blue", advantage) : string.Format(formatString, "yellow", advantage);
             }
-            Label l = new Label
-            {
-                Content = label
-            };
-            return l;
+            return label;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

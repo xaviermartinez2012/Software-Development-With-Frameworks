@@ -8,15 +8,19 @@
         Title="Othello!" Width="500">
     <Window.Resources>
         <local:OthelloAdvantageConverter x:Key="Advantage"/>
+        <local:OthelloPlayerConverter x:Key="Player"/>
     </Window.Resources>
     <DockPanel>
+        <ToolBar Height="30" DockPanel.Dock="Top" FontSize="10" DataContext="{Binding ElementName=OthelloView}">
+            <Button Content="Undo" BorderBrush="Silver" Click="Undo_Button_Click" IsEnabled="{Binding Model.CanUndo}" Name="undoButton"/>
+        </ToolBar>
         <StatusBar Height="30" DockPanel.Dock="Bottom" FontSize="10" DataContext="{Binding ElementName=OthelloView}">
             <WrapPanel>
                 <Label>Score:</Label>
-                <ContentControl Content="{Binding Model.CurrentAdvantage, Converter={StaticResource Advantage}}"/>
+                <Label Content="{Binding Model.CurrentAdvantage, Converter={StaticResource Advantage}}"/>
+                <Label Content="{Binding Model.CurrentPlayer, Converter={StaticResource Player}}"/>
             </WrapPanel>
         </StatusBar>
         <local:OthelloView x:Name="OthelloView"/>
-        
     </DockPanel>
 </Window>

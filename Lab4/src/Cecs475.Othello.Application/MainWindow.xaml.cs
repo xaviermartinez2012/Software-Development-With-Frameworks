@@ -21,5 +21,13 @@ namespace Cecs475.Othello.Application {
 		public MainWindow() {
 			InitializeComponent();
 		}
-	}
+
+        private void Undo_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            OthelloView v = btn.DataContext as OthelloView;
+            OthelloViewModel vm = v.FindResource("vm") as OthelloViewModel;
+            vm.UndoLastMove();
+        }
+    }
 }
