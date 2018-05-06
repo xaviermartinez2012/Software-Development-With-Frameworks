@@ -14,16 +14,30 @@ namespace Cecs475.Scheduling.Web.Controllers
 
         [HttpGet]
         [Route("{year}/{term}")]
-        public IEnumerable<CourseSectionDto> GetCourse(string year, string term)
+        public IEnumerable<CourseSectionDto> GetCourseSections(string year, string term)
         {
-            var semester = mContext.SemesterTerms.Where(s => s.Name.Equals(String.Format("{0} {1}", term, year), StringComparison.InvariantCultureIgnoreCase))
+            var semester = mContext.SemesterTerms.Where(s => s.Name.Equals(term + " " + year, StringComparison.InvariantCultureIgnoreCase))
                 .SingleOrDefault();
+            ValidateSemester(semester, $"No semester term with term: {term} year: {year} found");
+            return semester.CourseSections.Select(CourseSectionDto.From);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public IEnumerable<CourseSectionDto> GetCourseSections(int id)
+        {
+            var semester = mContext.SemesterTerms.Where(s => s.Id == id).SingleOrDefault();
+            ValidateSemester(semester, $"No semester term with id: {id} found");
+            return semester.CourseSections.Select(CourseSectionDto.From);
+        }
+
+        public void ValidateSemester(Model.SemesterTerm semester, String errorString)
+        {
             if (semester == null)
             {
                 throw new HttpResponseException(Request.CreateErrorResponse(
-                HttpStatusCode.NotFound, $"No semester term with term + year {term} {year} found"));
+                HttpStatusCode.NotFound, errorString));
             }
-            return semester.CourseSections.Select(CourseSectionDto.From);
         }
     }
 }
