@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="110"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Favorite Cereal:" Grid.Column="0" VerticalContentAlignment="Bottom" FontSize="12"/>
+                <Label x:Name="somelabel" Content="Favorite Cereal:" Grid.Column="0" VerticalContentAlignment="Bottom" FontSize="12"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
                     <RadioButton x:Name="Cheerios" Content="Cheerios" HorizontalContentAlignment="Right" Padding="5,-3" FontSize="12" BorderThickness="1" ClipToBounds="True"/>
                     <RadioButton x:Name="WheatChex" Content="Wheat Chex" HorizontalContentAlignment="Right" Padding="5,-3" FontSize="12" BorderThickness="1" ClipToBounds="True"/>

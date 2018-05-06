@@ -38,6 +38,7 @@ namespace Lab3
                         break;
                 }
             };
+            somelabel.Background = Brushes.Red;
         }
     }
 }

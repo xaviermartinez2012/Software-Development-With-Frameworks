@@ -57,16 +57,35 @@ namespace Cecs475.Othello.Application {
 					break;
 				}
 			}
-
-			PossibleMoves = new HashSet<BoardPosition>(mBoard.GetPossibleMoves().Select(m => m.Position));
-			var newSquares = BoardPosition.GetRectangularPositions(8, 8);
-			int i = 0;
-			foreach (var pos in newSquares) {
-				mSquares[i].Player = mBoard.GetPlayerAtPosition(pos);
-				i++;
-			}
-			OnPropertyChanged(nameof(CurrentAdvantage));
+            UpdateSquares();
+            UpdateBoardState();
 		}
+
+        public void UpdateSquares()
+        {
+            PossibleMoves = new HashSet<BoardPosition>(mBoard.GetPossibleMoves().Select(m => m.Position));
+            var newSquares = BoardPosition.GetRectangularPositions(8, 8);
+            int i = 0;
+            foreach (var pos in newSquares)
+            {
+                mSquares[i].Player = mBoard.GetPlayerAtPosition(pos);
+                i++;
+            }
+        }
+
+        public void UpdateBoardState()
+        {
+            OnPropertyChanged(nameof(CurrentAdvantage));
+            OnPropertyChanged(nameof(CurrentPlayer));
+            OnPropertyChanged(nameof(CanUndo));
+        }
+
+        public void UndoLastMove()
+        {
+            mBoard.UndoLastMove();
+            UpdateSquares();
+            UpdateBoardState();
+        }
 
 		public ObservableCollection<OthelloSquare> Squares {
 			get { return mSquares; }
@@ -78,5 +97,8 @@ namespace Cecs475.Othello.Application {
 
 		public GameAdvantage CurrentAdvantage { get { return mBoard.CurrentAdvantage; } }
 
+        public int CurrentPlayer { get { return mBoard.CurrentPlayer; } }
+
+        public bool CanUndo { get { return mBoard.MoveHistory.Any(); } }
 	}
 }
