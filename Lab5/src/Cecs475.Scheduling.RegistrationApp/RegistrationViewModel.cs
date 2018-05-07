@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,25 +23,17 @@ namespace Cecs475.Scheduling.RegistrationApp
     public class CourseSectionDto
     {
         public int Id { get; set; }
-        public int SemesterTermId { get; set; }
-        public Catalogcourse CatalogCourse { get; set; }
+        public string DepartmentName { get; set; }
+        public string CourseNumber { get; set; }
         public int SectionNumber { get; set; }
 
         public override string ToString()
         {
-            return $"{CatalogCourse.DepartmentName} {CatalogCourse.CourseNumber}-{SectionNumber}";
+            return $"{DepartmentName} {CourseNumber}-{SectionNumber}";
         }
     }
 
-    public class Catalogcourse
-    {
-        public int Id { get; set; }
-        public string DepartmentName { get; set; }
-        public string CourseNumber { get; set; }
-        public object[] PrerequisiteCourseIds { get; set; }
-    }
-
-    public class RegistrationViewModel
+    public class RegistrationViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// A URL path to the registration web service.
@@ -50,7 +43,32 @@ namespace Cecs475.Scheduling.RegistrationApp
         /// The full name of the student who is registering.
         /// </summary>
         public string FullName { get; set; }
-        public List<SemesterTermDto> SemesterTerms { get; set; }
-        public List<CourseSectionDto> CourseSections { get; set; }
+        private IEnumerable<SemesterTermDto> semesterTerms;
+        public IEnumerable<SemesterTermDto> SemesterTerms
+        {
+            get { return semesterTerms; }
+            set
+            {
+                semesterTerms = value;
+                OnPropertyChanged(nameof(SemesterTerms));
+            }
+        }
+        private IEnumerable<CourseSectionDto> courseSections;
+        public IEnumerable<CourseSectionDto> CourseSections
+        {
+            get { return courseSections; }
+            set
+            {
+                courseSections = value;
+                OnPropertyChanged(nameof(CourseSections));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

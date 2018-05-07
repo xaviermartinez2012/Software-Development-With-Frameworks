@@ -22,7 +22,8 @@ namespace Cecs475.Scheduling.RegistrationApp {
 	public partial class MainWindow : Window {
 		public MainWindow() {
 			InitializeComponent();
-		}
+            ViewModel.ApiUrl = "http://localhost:51735/";
+        }
 
 		public RegistrationViewModel ViewModel => 
 			FindResource("ViewModel") as RegistrationViewModel;
@@ -42,7 +43,7 @@ namespace Cecs475.Scheduling.RegistrationApp {
 		}
 
 		private void mRegisterBtn_Click(object sender, RoutedEventArgs e) {
-			string[] courseSplit = mCourseText.Text.Split('-');
+			string[] courseSplit = mCourseSection.SelectedValue.ToString().Split('-');
 			int sectionNum = Convert.ToInt32(courseSplit[1]);
 			string[] nameSplit = courseSplit[0].Split(' ');
 
@@ -60,7 +61,7 @@ namespace Cecs475.Scheduling.RegistrationApp {
 				request.AddJsonBody(new {
 					StudentId = (int)obj["Id"],
 					CourseSection = new {
-						SemesterTermId = 2, // hard-code Fall 2017
+						SemesterTermId = ((SemesterTermDto) mSemesterTerm.SelectedValue).Id,
 						CatalogCourse = new {
 							DepartmentName = nameSplit[0],
 							CourseNumber = nameSplit[1]
@@ -81,8 +82,8 @@ namespace Cecs475.Scheduling.RegistrationApp {
 		}
 
 		private async void mAsyncBtn_Click(object sender, RoutedEventArgs e) {
-			string[] courseSplit = mCourseText.Text.Split('-');
-			int sectionNum = Convert.ToInt32(courseSplit[1]);
+            string[] courseSplit = mCourseSection.SelectedValue.ToString().Split('-');
+            int sectionNum = Convert.ToInt32(courseSplit[1]);
 			string[] nameSplit = courseSplit[0].Split(' ');
 
 
@@ -122,8 +123,8 @@ namespace Cecs475.Scheduling.RegistrationApp {
 				request.AddJsonBody(new {
 					StudentId = (int)obj["Id"],
 					CourseSection = new {
-						SemesterTermId = 2, // hard-code Fall 2017
-						CatalogCourse = new {
+						SemesterTermId = ((SemesterTermDto)mSemesterTerm.SelectedValue).Id,
+                        CatalogCourse = new {
 							DepartmentName = nameSplit[0],
 							CourseNumber = nameSplit[1]
 						},
@@ -142,5 +143,44 @@ namespace Cecs475.Scheduling.RegistrationApp {
 				}
 			}
 		}
-	}
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var client = new RestClient(ViewModel.ApiUrl);
+            var request = new RestRequest("api/schedule/terms", Method.GET);
+            var task = client.ExecuteTaskAsync(request);
+            var response = await task;
+            JArray jArr = JArray.Parse(response.Content);
+            IEnumerable<SemesterTermDto> semesterTerms =
+                from obj in jArr
+                select new SemesterTermDto
+                {
+                    Id = (int)obj["Id"],
+                    Name = (string)obj["Name"]
+                };
+            ViewModel.SemesterTerms = semesterTerms;
+        }
+
+        private async void SemesterTerm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            SemesterTermDto semesterTerm = comboBox.SelectedValue as SemesterTermDto;
+            var client = new RestClient("http://localhost:51735/");
+            var request = new RestRequest("api/schedule/{id}", Method.GET);
+            request.AddUrlSegment("id", semesterTerm.Id.ToString());
+            var task = client.ExecuteTaskAsync(request);
+            var response = await task;
+            JArray jArr = JArray.Parse(response.Content);
+            IEnumerable<CourseSectionDto> courseSectionDtos =
+                from obj in jArr
+                select new CourseSectionDto
+                {
+                    Id = (int)obj["Id"],
+                    DepartmentName = (string)obj["CatalogCourse"]["DepartmentName"],
+                    CourseNumber = (string)obj["CatalogCourse"]["CourseNumber"],
+                    SectionNumber = (int)obj["SectionNumber"]
+                };
+            ViewModel.CourseSections = courseSectionDtos;
+        }
+    }
 }
