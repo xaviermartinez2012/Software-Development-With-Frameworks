@@ -1,6 +1,7 @@
 ﻿using Cecs475.BoardGames.WpfView;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,8 +20,12 @@ namespace Cecs475.BoardGames.WpfApp {
 	/// Interaction logic for GameChoiceWindow.xaml
 	/// </summary>
 	public partial class GameChoiceWindow : Window {
-		public GameChoiceWindow() {
+
+        private IEnumerable<IWpfGameFactory> GameTypes { get; set; }
+
+        public GameChoiceWindow() {
 			InitializeComponent();
+            FindGames();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e) {
@@ -42,5 +47,28 @@ namespace Cecs475.BoardGames.WpfApp {
 		private void GameWindow_Closed(object sender, EventArgs e) {
 			this.Show();
 		}
+
+        private void FindGames()
+        {
+            Type gameType = typeof(IWpfGameFactory);
+            var files = Directory.EnumerateFiles(@"games", "*.dll");
+            foreach (var file in files)
+            {
+                Assembly.LoadFrom(file);
+            }
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var matchingTypes = new List<Type>();
+            foreach (var assembly in assemblies)
+            {
+                var types = assembly.GetTypes();
+                var target = types.Where(t => gameType.IsAssignableFrom(t) && !t.IsInterface).Select(t => t);
+                if (target.Any())
+                {
+                    matchingTypes.AddRange(target);
+                }
+            }
+            GameTypes = matchingTypes.Select(t => (IWpfGameFactory) Activator.CreateInstance(t));
+            this.Resources.Add("GameTypes", GameTypes);
+        }
 	}
 }

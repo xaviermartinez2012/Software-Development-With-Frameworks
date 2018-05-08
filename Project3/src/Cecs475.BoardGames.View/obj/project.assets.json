@@ -199,11 +199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\Documents\\CECS-475-Projects\\project2-deepminddos\\src\\Cecs475.BoardGames.View\\Cecs475.BoardGames.View.csproj",
+      "projectUniqueName": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.View\\Cecs475.BoardGames.View.csproj",
       "projectName": "Cecs475.BoardGames.View",
-      "projectPath": "Z:\\Documents\\CECS-475-Projects\\project2-deepminddos\\src\\Cecs475.BoardGames.View\\Cecs475.BoardGames.View.csproj",
+      "projectPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.View\\Cecs475.BoardGames.View.csproj",
       "packagesPath": "C:\\Users\\xaviermartinez\\.nuget\\packages\\",
-      "outputPath": "Z:\\Documents\\CECS-475-Projects\\project2-deepminddos\\src\\Cecs475.BoardGames.View\\obj\\",
+      "outputPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.View\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -222,8 +222,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "Z:\\Documents\\CECS-475-Projects\\project2-deepminddos\\src\\Cecs475.BoardGames.Model\\Cecs475.BoardGames.Model.csproj": {
-              "projectPath": "Z:\\Documents\\CECS-475-Projects\\project2-deepminddos\\src\\Cecs475.BoardGames.Model\\Cecs475.BoardGames.Model.csproj"
+            "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.Model\\Cecs475.BoardGames.Model.csproj": {
+              "projectPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.Model\\Cecs475.BoardGames.Model.csproj"
             }
           }
         }
