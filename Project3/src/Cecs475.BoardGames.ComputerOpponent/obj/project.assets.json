@@ -182,8 +182,8 @@
     },
     "Cecs475.BoardGames.Model/1.0.0": {
       "type": "project",
-      "path": "../src/Cecs475.BoardGames.Model/Cecs475.BoardGames.Model.csproj",
-      "msbuildProject": "../src/Cecs475.BoardGames.Model/Cecs475.BoardGames.Model.csproj"
+      "path": "../Cecs475.BoardGames.Model/Cecs475.BoardGames.Model.csproj",
+      "msbuildProject": "../Cecs475.BoardGames.Model/Cecs475.BoardGames.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -199,11 +199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\Cecs475.BoardGames.ComputerOpponent\\Cecs475.BoardGames.ComputerOpponent.csproj",
+      "projectUniqueName": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.ComputerOpponent\\Cecs475.BoardGames.ComputerOpponent.csproj",
       "projectName": "Cecs475.BoardGames.ComputerOpponent",
-      "projectPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\Cecs475.BoardGames.ComputerOpponent\\Cecs475.BoardGames.ComputerOpponent.csproj",
+      "projectPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.ComputerOpponent\\Cecs475.BoardGames.ComputerOpponent.csproj",
       "packagesPath": "C:\\Users\\xaviermartinez\\.nuget\\packages\\",
-      "outputPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\Cecs475.BoardGames.ComputerOpponent\\obj\\",
+      "outputPath": "Z:\\Documents\\CECS-475-Projects\\Software-Development-With-Frameworks\\Project3\\src\\Cecs475.BoardGames.ComputerOpponent\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

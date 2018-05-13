@@ -1,4 +1,5 @@
 ﻿using Cecs475.BoardGames.Chess.Model;
+using Cecs475.BoardGames.ComputerOpponent;
 using Cecs475.BoardGames.Model;
 using Cecs475.BoardGames.WpfView;
 using System;
@@ -106,6 +107,8 @@ namespace Cecs475.BoardGames.Chess.WpfView
         private ObservableCollection<ChessSquare> mSquares;
         private ChessSquare mCurrentlySelected;
         public event EventHandler GameFinished;
+        private const int MAX_AI_DEPTH = 7;
+        private IGameAi mGameAi = new MinimaxAi(MAX_AI_DEPTH);
 
         public ChessViewModel()
         {
@@ -146,6 +149,15 @@ namespace Cecs475.BoardGames.Chess.WpfView
 		public void ApplyMove(ChessMove move)
         {
             mBoard.ApplyMove(move);
+
+            if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
+            {
+                var bestMove = mGameAi.FindBestMove(mBoard);
+                if (bestMove != null)
+                {
+                    mBoard.ApplyMove(bestMove as ChessMove);
+                }
+            }
 
             RebindState();
 
@@ -236,6 +248,10 @@ namespace Cecs475.BoardGames.Chess.WpfView
             if (CanUndo)
             {
                 mBoard.UndoLastMove();
+                if (Players == NumberOfPlayers.One && CanUndo)
+                {
+                    mBoard.UndoLastMove();
+                }
                 RebindState();
             }
         }

@@ -98,9 +98,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cecs475.BoardGames.Chess.Model\Cecs475.BoardGames.Chess.Model.csproj">
-      <Project>{16a691e8-d370-4cab-a02c-1bbbfdf19dd4}</Project>
-      <Name>Cecs475.BoardGames.Chess.Model</Name>
+    <ProjectReference Include="..\Cecs475.BoardGames.ComputerOpponent\Cecs475.BoardGames.ComputerOpponent.csproj">
+      <Project>{3eeb0018-1f6d-412d-9309-d9ff2bef4ef6}</Project>
+      <Name>Cecs475.BoardGames.ComputerOpponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cecs475.BoardGames.Model\Cecs475.BoardGames.Model.csproj">
+      <Project>{ad3670ac-f179-44fd-b2c4-2bf0c6819355}</Project>
+      <Name>Cecs475.BoardGames.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Cecs475.BoardGames.WpfView\Cecs475.BoardGames.WpfView.csproj">
       <Project>{2df47748-ad85-4ed5-8b57-729bed253f66}</Project>

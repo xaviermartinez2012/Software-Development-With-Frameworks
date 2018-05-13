@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecs475.BoardGames.TicTacTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecs475.BoardGames.Chess.WpfView", "src\Cecs475.BoardGames.Chess.WpfView\Cecs475.BoardGames.Chess.WpfView.csproj", "{D990010B-0B1C-4220-9A62-FCB10D9E4633}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecs475.BoardGames.ComputerOpponent", "Cecs475.BoardGames.ComputerOpponent\Cecs475.BoardGames.ComputerOpponent.csproj", "{AD832137-AB54-47DC-843B-BF73BCB7D0F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecs475.BoardGames.ComputerOpponent", "src\Cecs475.BoardGames.ComputerOpponent\Cecs475.BoardGames.ComputerOpponent.csproj", "{3EEB0018-1F6D-412D-9309-D9FF2BEF4EF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,10 +105,10 @@ Global
 		{D990010B-0B1C-4220-9A62-FCB10D9E4633}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D990010B-0B1C-4220-9A62-FCB10D9E4633}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D990010B-0B1C-4220-9A62-FCB10D9E4633}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD832137-AB54-47DC-843B-BF73BCB7D0F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD832137-AB54-47DC-843B-BF73BCB7D0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD832137-AB54-47DC-843B-BF73BCB7D0F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD832137-AB54-47DC-843B-BF73BCB7D0F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EEB0018-1F6D-412D-9309-D9FF2BEF4EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EEB0018-1F6D-412D-9309-D9FF2BEF4EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EEB0018-1F6D-412D-9309-D9FF2BEF4EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EEB0018-1F6D-412D-9309-D9FF2BEF4EF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +129,7 @@ Global
 		{8B69E987-CC12-47CF-82B0-87D608AA69F3} = {76011B83-D04B-4ABA-AEF1-95B95CCA77DA}
 		{7A7F7912-0B8A-4C8C-9421-52BEA6BC840D} = {76011B83-D04B-4ABA-AEF1-95B95CCA77DA}
 		{D990010B-0B1C-4220-9A62-FCB10D9E4633} = {76011B83-D04B-4ABA-AEF1-95B95CCA77DA}
+		{3EEB0018-1F6D-412D-9309-D9FF2BEF4EF6} = {76011B83-D04B-4ABA-AEF1-95B95CCA77DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AEF5D45-27E2-4692-B733-56FC113DA496}
