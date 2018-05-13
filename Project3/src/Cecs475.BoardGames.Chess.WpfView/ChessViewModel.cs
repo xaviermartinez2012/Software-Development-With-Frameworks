@@ -229,6 +229,8 @@ namespace Cecs475.BoardGames.Chess.WpfView
             }
         }
 
+        public NumberOfPlayers Players { get; set; }
+
         public void UndoMove()
         {
             if (CanUndo)

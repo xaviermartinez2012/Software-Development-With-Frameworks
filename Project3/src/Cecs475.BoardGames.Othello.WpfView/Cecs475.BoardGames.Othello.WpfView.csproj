@@ -85,6 +85,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Cecs475.BoardGames.ComputerOpponent\Cecs475.BoardGames.ComputerOpponent.csproj">
+      <Project>{ad832137-ab54-47dc-843b-bf73bcb7d0f9}</Project>
+      <Name>Cecs475.BoardGames.ComputerOpponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cecs475.BoardGames.Model\Cecs475.BoardGames.Model.csproj">
       <Project>{ad3670ac-f179-44fd-b2c4-2bf0c6819355}</Project>
       <Name>Cecs475.BoardGames.Model</Name>
