@@ -24,8 +24,8 @@ namespace Cecs475.BoardGames.WpfApp {
         private IEnumerable<IWpfGameFactory> GameTypes { get; set; }
 
         public GameChoiceWindow() {
-			InitializeComponent();
             FindGames();
+			InitializeComponent();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e) {

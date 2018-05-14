@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Cecs475.BoardGames.Chess.WpfView
 {
@@ -153,6 +154,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
             {
                 var bestMove = mGameAi.FindBestMove(mBoard);
+                
                 if (bestMove != null)
                 {
                     mBoard.ApplyMove(bestMove as ChessMove);

@@ -2035,32 +2035,33 @@ namespace Cecs475.BoardGames.Chess.Model {
             {
                 long whiteWeight = 0;
                 long blackWeight = 0;
-                whiteWeight += CurrentAdvantage.Player == 1 ? CurrentAdvantage.Advantage : -CurrentAdvantage.Advantage;
-                blackWeight += CurrentAdvantage.Player == 2 ? CurrentAdvantage.Advantage : -CurrentAdvantage.Advantage;
-                var whitePawns = CreatePositionsListFromBitboard(WhitePawns);
-                var whiteRooks = CreatePositionsListFromBitboard(WhiteRooks);
-                var whiteKnights = CreatePositionsListFromBitboard(WhiteRooks);
-                var whiteQueen = CreatePositionsListFromBitboard(WhiteQueen);
-                var whiteKing = CreatePositionsListFromBitboard(WhiteKing);
-                var whiteBishops = CreatePositionsListFromBitboard(WhiteBishops);
-                var blackBishops = CreatePositionsListFromBitboard(BlackBishops);
-                var blackPawns = CreatePositionsListFromBitboard(BlackPawns);
-                var blackRooks = CreatePositionsListFromBitboard(BlackRooks);
-                var blackKnights = CreatePositionsListFromBitboard(BlackRooks);
-                var blackQueen = CreatePositionsListFromBitboard(BlackQueen);
-                var blackKing = CreatePositionsListFromBitboard(BlackKing);
 
+                var whitePawns = GetPositionsOfPiece(ChessPieceType.Pawn, 1);
+                var whiteRooks = GetPositionsOfPiece(ChessPieceType.Rook, 1);
+                var whiteKnights = GetPositionsOfPiece(ChessPieceType.Knight, 1);
+                var whiteQueen = GetPositionsOfPiece(ChessPieceType.Queen, 1);
+                var whiteKing = GetPositionsOfPiece(ChessPieceType.King, 1);
+                var whiteBishops = GetPositionsOfPiece(ChessPieceType.Bishop, 1);
+
+                var blackBishops = GetPositionsOfPiece(ChessPieceType.Bishop, 2);
+                var blackPawns = GetPositionsOfPiece(ChessPieceType.Pawn, 2);
+                var blackRooks = GetPositionsOfPiece(ChessPieceType.Rook, 2);
+                var blackKnights = GetPositionsOfPiece(ChessPieceType.Knight, 2);
+                var blackQueen = GetPositionsOfPiece(ChessPieceType.Queen, 2);
+                var blackKing = GetPositionsOfPiece(ChessPieceType.King, 2);
+
+                #region whiteWeight Calculations
                 foreach (var pos in whitePawns)
                 {
                     whiteWeight += 6 - pos.Row;
                     var attackMoves = GetPawnAttackMoves(pos, 1);
                     var validAttackMoves = GetValidPawnAttackMoves(pos, 1);
                     var joinBishop = from move in attackMoves
-                                     join bPos in whiteBishops on move.EndPosition equals bPos
-                                     select bPos;
+                                     join iPos in whiteBishops on move.EndPosition equals iPos
+                                     select iPos;
                     var joinKnight = from move in attackMoves
-                                     join kPos in whiteKnights on move.EndPosition equals kPos
-                                     select kPos;
+                                     join iPos in whiteKnights on move.EndPosition equals iPos
+                                     select iPos;
                     var joinAttackKnight = from move in validAttackMoves
                                            join iPos in blackKnights on move.EndPosition equals iPos
                                            select iPos;
@@ -2080,6 +2081,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                     whiteWeight += joinKnight.Count();
                     whiteWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+
                 foreach (var pos in whiteRooks)
                 {
                     var attackMoves = GetHorizontalVerticalAttackMoves(pos);
@@ -2109,6 +2111,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                     whiteWeight += joinKnight.Count();
                     whiteWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+                
                 foreach (var pos in whiteKnights)
                 {
                     var attackMoves = GetKnightAttackMoves(pos, 1);
@@ -2134,6 +2137,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                     whiteWeight += joinBishop.Count();
                     whiteWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+
                 foreach (var pos in whiteBishops)
                 {
                     var attackMoves = GetDiagonalAttackMoves(pos);
@@ -2159,6 +2163,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                     whiteWeight += joinKnight.Count();
                     whiteWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+
                 foreach (var pos in whiteQueen)
                 {
                     var attackMoves = GetHorizontalVerticalAttackMoves(pos);
@@ -2190,6 +2195,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                     whiteWeight += joinKnight.Count();
                     whiteWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+
                 foreach (var pos in whiteKing)
                 {
                     var attackMoves = GetKingAttackMoves(pos, 1);
@@ -2219,12 +2225,14 @@ namespace Cecs475.BoardGames.Chess.Model {
                     whiteWeight += joinKnight.Count();
                     whiteWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+                #endregion
 
+                #region blackWeight Calculations
                 foreach (var pos in blackPawns)
                 {
                     blackWeight += pos.Row - 1;
-                    var attackMoves = GetPawnAttackMoves(pos, 1);
-                    var validAttackMoves = GetValidPawnAttackMoves(pos, 1);
+                    var attackMoves = GetPawnAttackMoves(pos, 2);
+                    var validAttackMoves = GetValidPawnAttackMoves(pos, 2);
                     var joinBishop = from move in attackMoves
                                      join bPos in blackBishops on move.EndPosition equals bPos
                                      select bPos;
@@ -2253,7 +2261,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                 foreach (var pos in blackRooks)
                 {
                     var attackMoves = GetHorizontalVerticalAttackMoves(pos);
-                    var validAttackMoves = GetValidHorizontalVerticalAttackMoves(pos, 1, ChessPieceType.Empty);
+                    var validAttackMoves = GetValidHorizontalVerticalAttackMoves(pos, 2, ChessPieceType.Empty);
                     var joinBishop = from move in attackMoves
                                      join bPos in blackBishops on move.EndPosition equals bPos
                                      select bPos;
@@ -2281,8 +2289,8 @@ namespace Cecs475.BoardGames.Chess.Model {
                 }
                 foreach (var pos in blackKnights)
                 {
-                    var attackMoves = GetKnightAttackMoves(pos, 1);
-                    var validAttackMoves = GetValidKnightMoves(pos, 1);
+                    var attackMoves = GetKnightAttackMoves(pos, 2);
+                    var validAttackMoves = GetValidKnightMoves(pos, 2);
                     var joinBishop = from move in attackMoves
                                      join bPos in blackBishops on move.EndPosition equals bPos
                                      select bPos;
@@ -2307,7 +2315,7 @@ namespace Cecs475.BoardGames.Chess.Model {
                 foreach (var pos in blackBishops)
                 {
                     var attackMoves = GetDiagonalAttackMoves(pos);
-                    var validAttackMoves = GetValidDiagonalAttackMoves(pos, 1, ChessPieceType.Empty);
+                    var validAttackMoves = GetValidDiagonalAttackMoves(pos, 2, ChessPieceType.Empty);
                     var joinKnight = from move in attackMoves
                                      join kPos in blackKnights on move.EndPosition equals kPos
                                      select kPos;
@@ -2333,8 +2341,8 @@ namespace Cecs475.BoardGames.Chess.Model {
                 {
                     var attackMoves = GetHorizontalVerticalAttackMoves(pos);
                     attackMoves.AddRange(GetDiagonalAttackMoves(pos));
-                    var validAttackMoves = GetValidHorizontalVerticalAttackMoves(pos, 1, ChessPieceType.Empty);
-                    validAttackMoves.AddRange(GetValidDiagonalAttackMoves(pos, 1, ChessPieceType.Empty));
+                    var validAttackMoves = GetValidHorizontalVerticalAttackMoves(pos, 2, ChessPieceType.Empty);
+                    validAttackMoves.AddRange(GetValidDiagonalAttackMoves(pos, 2, ChessPieceType.Empty));
                     var joinBishop = from move in attackMoves
                                      join bPos in blackBishops on move.EndPosition equals bPos
                                      select bPos;
@@ -2362,8 +2370,8 @@ namespace Cecs475.BoardGames.Chess.Model {
                 }
                 foreach (var pos in blackKing)
                 {
-                    var attackMoves = GetKingAttackMoves(pos, 1);
-                    var validAttackMoves = GetValidKingAttackMoves(pos, 1);
+                    var attackMoves = GetKingAttackMoves(pos, 2);
+                    var validAttackMoves = GetValidKingAttackMoves(pos, 2);
                     var joinBishop = from move in attackMoves
                                      join bPos in blackBishops on move.EndPosition equals bPos
                                      select bPos;
@@ -2389,10 +2397,12 @@ namespace Cecs475.BoardGames.Chess.Model {
                     blackWeight += joinKnight.Count();
                     blackWeight += (joinAttackKnight.Count() + joinAttackBishop.Count()) + (joinAttackRook.Count() * 2) + (joinAttackQueen.Count() * 5) + (joinAttackKing.Count() * 4);
                 }
+                #endregion
 
-                return whiteWeight - blackWeight;
+                var weight = whiteWeight - blackWeight + (CurrentAdvantage.Player == 1 ? CurrentAdvantage.Advantage : -CurrentAdvantage.Advantage);
+                return weight;
             }
-        
+
         }
         #endregion
 
