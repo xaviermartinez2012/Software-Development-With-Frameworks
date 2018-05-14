@@ -40,28 +40,43 @@ namespace Cecs475.BoardGames.ComputerOpponent
                 };
             }
 
+            var iAlpha = alpha;
+            var iBeta = beta;
             bool isMaximizing = b.CurrentPlayer == 1;
-            var bestWeight = isMaximizing ? long.MinValue : long.MaxValue;
             IGameMove bestMove = null;
             foreach (var move in b.GetPossibleMoves())
             {
+                if (!(iAlpha < iBeta))
+                {
+                    return new MinimaxBestMove
+                    {
+                        Weight = isMaximizing ? iBeta : iAlpha,
+                        Move = bestMove
+                    };
+                }
                 b.ApplyMove(move);
-                var w = FindBestMove(b, alpha, beta, depthLeft - 1).Weight;
+                var w = FindBestMove(b, iAlpha, iBeta, depthLeft - 1).Weight;
                 b.UndoLastMove();
-                if (isMaximizing && w > bestWeight)
+                if (isMaximizing)
                 {
-                    bestWeight = w;
-                    bestMove = move;
-                }
-                else if (!isMaximizing && w < bestWeight)
+                    if (w > iAlpha)
+                    {
+                        iAlpha = w;
+                        bestMove = move;
+                    }
+                } else
                 {
-                    bestWeight = w;
-                    bestMove = move;
+                    if (w < iBeta)
+                    {
+                        iBeta = w;
+                        bestMove = move;
+                    }
                 }
+                
             }
             return new MinimaxBestMove
             {
-                Weight = bestWeight,
+                Weight = isMaximizing ? iAlpha : iBeta,
                 Move = bestMove
             };
         }
