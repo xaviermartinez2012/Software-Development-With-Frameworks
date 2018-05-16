@@ -147,27 +147,27 @@ namespace Cecs475.BoardGames.Chess.WpfView
         /// <summary>
 		/// Applies a move for the current player at the given position.
 		/// </summary>
-		public void ApplyMove(ChessMove move)
-        {
-            mBoard.ApplyMove(move);
+		async public Task ApplyMove(ChessMove move) => await Task.Run(() =>
+                                                                 {
+                                                                     mBoard.ApplyMove(move);
+                                                                     RebindState();
 
-            if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
-            {
-                var bestMove = mGameAi.FindBestMove(mBoard);
-                
-                if (bestMove != null)
-                {
-                    mBoard.ApplyMove(bestMove as ChessMove);
-                }
-            }
+                                                                     if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
+                                                                     {
+                                                                         var bestMove = mGameAi.FindBestMove(mBoard);
 
-            RebindState();
+                                                                         if (bestMove != null)
+                                                                         {
+                                                                             mBoard.ApplyMove(bestMove as ChessMove);
+                                                                             RebindState();
+                                                                         }
+                                                                     }
 
-            if (mBoard.IsFinished)
-            {
-                GameFinished?.Invoke(this, new EventArgs());
-            }
-        }
+                                                                     if (mBoard.IsFinished)
+                                                                     {
+                                                                         GameFinished?.Invoke(this, new EventArgs());
+                                                                     }
+                                                                 });
 
         public ChessSquare FindKingSquareInCheck()
         {

@@ -28,7 +28,7 @@
             <DataTemplate>
                 <Border BorderThickness="1" BorderBrush="Black"
                         MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave"
-                        MouseUp="Border_MouseUp">
+                        MouseUp="Border_MouseUpAsync">
                     <Border.Background>
                         <MultiBinding Converter="{StaticResource BackgroundColor}">
                             <Binding Path="Position"/>

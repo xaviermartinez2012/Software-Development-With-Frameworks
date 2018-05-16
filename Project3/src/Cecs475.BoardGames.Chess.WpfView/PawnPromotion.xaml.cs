@@ -73,23 +73,23 @@ namespace Cecs475.BoardGames.Chess.WpfView
             this.Queen.Content = queenImage;
         }
 
-        private void Button_Click(object sender, EventArgs e)
+        async private void Button_Click(object sender, EventArgs e)
         {
             Button b = sender as Button;
             String name = b.Name;
             switch (name)
             {
                 case "Rook":
-                    mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Rook));
+                    await mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Rook));
                     break;
                 case "Knight":
-                    mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Knight));
+                    await mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Knight));
                     break;
                 case "Bishop":
-                    mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Bishop));
+                   await mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Bishop));
                     break;
                 case "Queen":
-                    mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Queen));
+                    await mChessViewModel.ApplyMove(new ChessMove(mStart, mEnd, ChessPieceType.Queen));
                     break;
             }
             this.Close();

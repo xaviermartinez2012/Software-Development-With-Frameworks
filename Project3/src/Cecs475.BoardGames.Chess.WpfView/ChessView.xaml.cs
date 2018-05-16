@@ -48,7 +48,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             square.IsHighlighted = false;
         }
 
-        private void Border_MouseUp(object sender, MouseButtonEventArgs e)
+        private async void Border_MouseUpAsync(object sender, MouseButtonEventArgs e)
         {
             Border b = sender as Border;
             var square = b.DataContext as ChessSquare;
@@ -84,7 +84,10 @@ namespace Cecs475.BoardGames.Chess.WpfView
                             {
                                 ChessViewModel.FindKingSquareInCheck().IsInCheck = false;
                             }
-                            ChessViewModel.ApplyMove(move);
+                            var window = Window.GetWindow(this);
+                            window.IsEnabled = false;
+                            await ChessViewModel.ApplyMove(move);
+                            window.IsEnabled = true;
                         }
                         square.IsHighlighted = false;
                     }
