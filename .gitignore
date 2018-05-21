@@ -17,3 +17,4 @@
 *.exe
 *.lref
 Lab4/src/Cecs475.Othello.Model/obj/Debug/*
+*.snk

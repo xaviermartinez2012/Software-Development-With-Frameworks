@@ -53,11 +53,6 @@ namespace Cecs475.BoardGames.WpfApp {
         private void FindGames()
         {
             Type gameType = typeof(IWpfGameFactory);
-            var files = Directory.EnumerateFiles(@"games", "*.dll");
-            foreach (var file in files)
-            {
-                Assembly.LoadFrom(file);
-            }
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var matchingTypes = new List<Type>();
             foreach (var assembly in assemblies)

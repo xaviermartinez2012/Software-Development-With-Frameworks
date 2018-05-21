@@ -16,7 +16,7 @@ namespace Cecs475.BoardGames.ComputerOpponent
     public class MinimaxAi : IGameAi
     {
         private long mMaxDepth;
-        public MinimaxAi(long maxDepth)
+        public MinimaxAi(int maxDepth)
         {
             mMaxDepth = maxDepth;
         }
